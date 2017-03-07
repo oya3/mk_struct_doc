@@ -1,0 +1,19 @@
+# visual studio
+.vs
+Debug/
+Release/
+*.VC.db
+*.VC.opendb
+
+# BICMO
+NOTrace.log
+
+# editor
+*.bak
+*~
+
+# gtags
+GPATH
+GRTAGS
+GTAGS
+
