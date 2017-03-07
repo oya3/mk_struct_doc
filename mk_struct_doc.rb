@@ -3,7 +3,6 @@ $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 
 require 'optparse'
 require 'outputer_axlsx'
-require 'outputer_spreadsheet'
 
 Encoding.default_external = 'utf-8'
 Encoding.default_internal = 'utf-8'
@@ -68,7 +67,6 @@ body.gsub(/^\s*typedef\s+struct\s*.*?\{(.+?)\}\s*(.+?);/m) do |match|
   end
 end
 
-create_xls_for_spreadsheet(typedefs, argv[1]) # xls仕様書作成
 create_xls_for_axlsx(typedefs, argv[1] + ".xlsx")
 create_new_header(body, multi_typedef_names, argv[0]+".new") # 新しい構造定義ファイル
 
