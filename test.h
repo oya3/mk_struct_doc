@@ -1,6 +1,12 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+
+/**
+ * @struct  Test00
+ * @brief   テスト００のデータ構造
+ * @details この構造は最大長を考慮して定義してある
+ */
 typedef struct _Test00
 {
 	bool member00; // メンバー００
@@ -8,8 +14,15 @@ typedef struct _Test00
 	short member02; // メンバー０２
     unsigned short member03; /* メンバー０３ */
 	int member04; // メンバー０４
-} Test00;
+} Test00,TEST00;
 
+/**
+ * @struct  Test01
+ * @brief   テスト０１のデータ構造
+ * @details １行目
+ *          ２行目
+ *          ３行目
+ */
 typedef struct {
 	bool member10; // メンバー１０
     unsigned char member11; /* メンバー１１ */

@@ -4,6 +4,8 @@ $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 require 'optparse'
 require 'outputer_axlsx'
 
+require 'pry'
+
 Encoding.default_external = 'utf-8'
 Encoding.default_internal = 'utf-8'
 
@@ -33,6 +35,22 @@ if argv.length != 2
 end
 
 body = File.read( argv[0], encoding: 'cp932:utf-8' )
+
+documents = Hash.new
+body.gsub(/^\/\*\*[\t \*\n]+?@struct\s+(.+?)\s*\n(.+?)\*\/$/m) do
+  title = $1
+  document = $2
+  params = Hash.new
+  document.gsub(/@(.+?)\s+([^@]+)/m) do
+    key = $1
+    value = $2
+    value.gsub!(/[ \t]+\*[ \t]+/,'')
+    value = value.strip
+    params[key] = value
+  end
+  documents[title] = params
+end
+
 
 typedefs = Hash.new # 全構造体保持用
 multi_typedef_names = Hash.new # 多重定義名置き換え用
@@ -67,8 +85,8 @@ body.gsub(/^\s*typedef\s+struct\s*.*?\{(.+?)\}\s*(.+?);/m) do |match|
   end
 end
 
-create_xls_for_axlsx(typedefs, argv[1] + ".xlsx")
-create_new_header(body, multi_typedef_names, argv[0]+".new") # 新しい構造定義ファイル
+create_xls_for_axlsx(documents, typedefs, argv[1] + ".xlsx")
+#create_new_header(body, multi_typedef_names, argv[0]+".new") # 新しい構造定義ファイル
 
 puts 'complete.'
 

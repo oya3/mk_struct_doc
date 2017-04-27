@@ -17,3 +17,6 @@ GPATH
 GRTAGS
 GTAGS
 
+# source
+product_common.*
+sousabu_common.*
