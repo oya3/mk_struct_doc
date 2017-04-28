@@ -3,6 +3,9 @@ $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)))
 
 require 'optparse'
 require 'outputer_axlsx'
+require 'collector/struct_collector'
+require 'collector/enum_collector'
+require 'outputter/axlsx_outputter'
 
 require 'pry'
 
@@ -36,6 +39,19 @@ end
 
 body = File.read( argv[0], encoding: 'cp932:utf-8' )
 
+# 各定義取得
+struct_collector = StructCollector.new body # 構造体
+enum_collector = EnumCollector.new body # enum
+
+# 各定義書き出し
+axlsx_outputter = AXLSXOutputter.new 
+axlsx_outputter.add_struct struct_collector.documents, struct_collector.contents
+axlsx_outputter.add_enum enum_collector.documents, enum_collector.contents
+axlsx_outputter.save argv[1]
+#create_xls_for_axlsx(struct_collector.documents, struct_collector.contents, argv[1] + ".xlsx")
+exit
+
+# doxygen commnet 取得
 documents = Hash.new
 body.gsub(/^\/\*\*[\t \*\n]+?@struct\s+(.+?)\s*\n(.+?)\*\/$/m) do
   title = $1
@@ -51,10 +67,9 @@ body.gsub(/^\/\*\*[\t \*\n]+?@struct\s+(.+?)\s*\n(.+?)\*\/$/m) do
   documents[title] = params
 end
 
-
+# typedef struct 構造抽出
 typedefs = Hash.new # 全構造体保持用
 multi_typedef_names = Hash.new # 多重定義名置き換え用
-# typedef struct 構造抽出
 body.gsub(/^\s*typedef\s+struct\s*.*?\{(.+?)\}\s*(.+?);/m) do |match|
   # puts "get defines  #{$1} #{$2}"
   one_typedef = $1.clone

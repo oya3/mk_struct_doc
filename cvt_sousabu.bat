@@ -1,1 +1,1 @@
-ruby mk_struct_doc.rb sousabu_common.h sousabu_common.xls
+ruby mk_struct_doc.rb sousabu_common.h sousabu_common.xlsx
