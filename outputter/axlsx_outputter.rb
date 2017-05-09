@@ -123,13 +123,13 @@ class AXLSXOutputter
     postions = calc_postions contents
     
     # 構造体一覧シート
-    sheet = add_sheet_with_list documents, contents, postions, 'enum一覧', 'enum名', '備考'
+    sheet = add_sheet_with_list documents, contents, postions, '列挙子一覧', '列挙子名', '備考'
     
     # 構造体's
     contents.each.with_index(1) do |(name,values),index|
       # puts "add worksheet #{name}"
       # sheet = book.workbook.add_worksheet( :name => name )
-      sheet.add_row(["#{index}. " + name], :style => @styles[:headline_style])
+      sheet.add_row(["#{index}. " + name + '列挙子'], :style => @styles[:headline_style])
       brief = ''
       details = ''
       if documents.has_key? name

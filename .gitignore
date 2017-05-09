@@ -18,5 +18,5 @@ GRTAGS
 GTAGS
 
 # source
-product_common.*
-sousabu_common.*
+*product_common.*
+*sousabu_common.*
